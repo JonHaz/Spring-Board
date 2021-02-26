@@ -1,0 +1,22 @@
+import numpy as np
+import pandas as pd
+pets = pd.DataFrame({'sex': np.array(['M', 'M', 'F', 'M', 'F', 'F', 'F', 'M', 'F', 'M']),
+                   'age': np.array([21, 45, 23, 56, 47, 70, 34, 30, 19, 62]),
+                   'pets': np.array([['cat', 'dog'],
+                                    ['hamster'],
+                                    ['cat', 'gerbil'],
+                                    ['fish', 'hamster', 'gerbil'],
+                                    ['cat'],
+                                    ['dog'],
+                                    ['dog'],
+                                    ['cat'],
+                                    ['rabbit', 'cat'],
+                                    ['dog']])})
+print(pets)
+pets[pets['age'] == min(pets['age'])]
+pets['num_pets'] = pets['pets'].apply(lambda x: len(x))
+print(pets)
+pet_series = pets['pets'].apply(pd.Series).stack().reset_index(drop=True)
+pet_series
+pet_series.value_counts()
+pets.loc[pets['pets'].apply(lambda x: 'dog' in x), 'age'].mean()
